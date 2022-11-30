@@ -19,15 +19,20 @@ def process_inventory():
     
     #create a list with all of the contents of the file
     while id_inventory!='':
+        
         #append grade to list
         name_inventory = file.readline()
         stock_inventory = int(file.readline())
         price_inventory = float(file.readline())
         new_inventory = inventory.Inventory(id_inventory,name_inventory,stock_inventory,price_inventory)
-        inventoryList.append(new_inventory)
+        inventoryList.append(new_inventory.get_id().rstrip('\n'))
+        inventoryList.append(new_inventory.get_name().rstrip('\n'))
+        inventoryList.append(new_inventory.get_stock())
+        inventoryList.append(new_inventory.get_price())
         #read newline
         id_inventory = file.readline() 
     file.close()
+    
     
     return inventoryList
     
@@ -35,10 +40,11 @@ def process_inventory():
 def print_inventory(list_inventory):
     
     
-    print(format("ID", "3"), format("Item", '30'), format("Price", '10'), format("Stock", '10'))
+    print(format("ID", "5"), format("Item", '30'), format("Price", '10'), format("Stock", '15'))
     
     for i in range(0, (len(list_inventory)), 4):
-        print(format(list_inventory[i], '0.0f'), format(list_inventory[i+1], '29'), "$", format(list_inventory[i+3], '5'), format(list_inventory[i+2], '10'))
+        
+        print(format(list_inventory[i], '5'), format(list_inventory[i+1], '30'), "$", format(list_inventory[i+3], '5'), format(list_inventory[i+2], '11'))
     print("Enter 0 when finished")
     
     

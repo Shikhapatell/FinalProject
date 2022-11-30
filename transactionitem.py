@@ -8,13 +8,13 @@ Created on Fri Nov 25 15:12:32 2022
 
 class TransactionItem: 
     def __init__(self, new_id, new_name, new_qty, new_price):
-        self.__id = new_id
+        self.id = new_id
         self.__name = new_name
         self.__quantity = new_qty
         self.__price = new_price
     
     def get_id(self): 
-        return self.__id
+        return self.id
         
         
     def set_id(self, new_id): 

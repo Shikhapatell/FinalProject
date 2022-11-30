@@ -18,7 +18,7 @@ class Inventory:
         return self.__id
         
     def get_name(self):
-        return self._name
+        return self.__name
         
     def get_stock(self):
         return self.__stock
