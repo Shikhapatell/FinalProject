@@ -8,7 +8,7 @@ Created on Fri Nov 25 15:12:42 2022
 
 #Laksh & Shikha final project
 #hi
-
+import inventory
 
 def process_inventory(): 
     
@@ -20,13 +20,11 @@ def process_inventory():
     #create a list with all of the contents of the file
     while id_inventory!='':
         #append grade to list
-        inventoryList.append(float(id_inventory))
         name_inventory = file.readline()
-        inventoryList.append(name_inventory.rstrip("\n"))
-        stock_inventory = file.readline()
-        inventoryList.append(float(stock_inventory))
-        price_inventory = file.readline()
-        inventoryList.append(float(price_inventory))
+        stock_inventory = int(file.readline())
+        price_inventory = float(file.readline())
+        new_inventory = inventory.Inventory(id_inventory,name_inventory,stock_inventory,price_inventory)
+        inventoryList.append(new_inventory)
         #read newline
         id_inventory = file.readline() 
     file.close()

@@ -12,25 +12,24 @@ class Inventory:
         self.__name = new_name
         self.__stock = new_stock
         self.__price = new_price
+        
+        
+    def get_id(self):
+        return self.__id
+        
+    def get_name(self):
+        return self._name
+        
+    def get_stock(self):
+        return self.__stock
+        
+    def get_price(self):
+        return self.__price
+        
+    def restock(self,new_stock):
         self.__stock = new_stock
-        self.__price = new_price
         
-    def get_id():
-        print()
-        
-    def get_name():
-        print()
-        
-    def get_stock():
-        print()
-        
-    def get_price():
-        print()
-        
-    def restock(new_stock):
-        print()
-        
-    def purchase(purch_qty):
+    def purchase(self,purch_qty):
         print()
         
     def __str__(self): 

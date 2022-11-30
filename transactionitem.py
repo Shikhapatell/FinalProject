@@ -13,36 +13,36 @@ class TransactionItem:
         self.__quantity = new_qty
         self.__price = new_price
     
-    def get_id(): 
-        print()
+    def get_id(self): 
+        return self.__id
         
         
-    def set_id(new_id): 
-        print()
+    def set_id(self, new_id): 
+        self.__id = new_id
         
         
-    def get_name(): 
-        print()
+    def get_name(self): 
+        return self.__name
         
         
-    def set_name(new_name): 
-        print()
+    def set_name(self,new_name): 
+        self.__name = new_name
         
         
-    def get_qty(): 
-        print()
+    def get_qty(self): 
+        return self.__quantity
         
         
-    def set_qty(new_qty): 
-        print()
+    def set_qty(self,new_qty): 
+        self.__quantity = new_qty
         
         
-    def get_price(): 
-        print()
+    def get_price(self): 
+        return self.__price
         
         
-    def set_price(new_price): 
-        print()
+    def set_price(self,new_price): 
+        self.__price = new_price
         
         
     def calc_cost(): 
