@@ -7,6 +7,8 @@ Created on Fri Nov 25 15:12:42 2022
 """
 
 #Laksh & Shikha final project
+#hi
+
 
 def process_inventory(): 
     
