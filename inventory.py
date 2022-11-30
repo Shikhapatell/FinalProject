@@ -33,7 +33,8 @@ class Inventory:
         print()
         
     def __str__(self): 
-        print()
+        var = format(self.__id, '5') +  format(self.__name, '30')+ "$" + format(str(self.__price), '5') + format(str(self.__stock), '11')
+        return var
         
         
         

@@ -14,35 +14,40 @@ def process_inventory():
     
     
     file = open("Inventory.txt", "r")
-    id_inventory = file.readline()
+    id_inventory = file.readline().rstrip('\n')
     inventoryDict = {}
     
     #create a list with all of the contents of the file
     while id_inventory!='':
         
         #append grade to list
-        name_inventory = file.readline()
-        stock_inventory = int(file.readline())
-        price_inventory = float(file.readline())
+        name_inventory = file.readline().rstrip('\n')
+        stock_inventory = int(file.readline().rstrip('\n'))
+        price_inventory = float(file.readline().rstrip('\n'))
         new_inventory = inventory.Inventory(id_inventory,name_inventory,price_inventory, stock_inventory)
-        inventoryDict.update({new_inventory.get_id().rstrip('\n'): [new_inventory.get_name().rstrip('\n'), new_inventory.get_stock(), new_inventory.get_price()]} )
+        inventoryDict.update({new_inventory.get_id().rstrip('\n'): new_inventory}) 
+        #inventoryDict.update({new_inventory.get_id().rstrip('\n'): [new_inventory.get_name().rstrip('\n'), new_inventory.get_stock(), new_inventory.get_price()]} )
         
         id_inventory = file.readline() 
     file.close()
     
-    print(inventoryDict)
     return inventoryDict
     
     
 def print_inventory(dict_inventory):
     
     
-    print(format("ID", "5"), format("Item", '30'), format("Price", '10'), format("Stock", '15'))
+   print(format("ID", "5"), format("Item", '30'), format("Price", '10'), format("Stock", '15'))
     
-    for i in dict_inventory:
+    #for i in dict_inventory:
         
-        print(format(i, '5'), format(dict_inventory[i][0], '30'), "$", format(dict_inventory[i][1], '5'), format(dict_inventory[i][2], '11'))
-    print("Enter 0 when finished")
+     #   print(format(i, '5'), format(dict_inventory[i][0], '30'), "$", format(dict_inventory[i][1], '5'), format(dict_inventory[i][2], '11'))
+    #print("Enter 0 when finished")
+    
+    
+   for i in dict_inventory:
+       print(dict_inventory[i])
+   print("Enter 0 when finished")
     
     
 def get_item_id (dict_inventory): 
