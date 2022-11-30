@@ -15,7 +15,7 @@ def process_inventory():
     
     file = open("Inventory.txt", "r")
     id_inventory = file.readline()
-    inventoryList = []
+    inventoryDict = {}
     
     #create a list with all of the contents of the file
     while id_inventory!='':
@@ -24,31 +24,28 @@ def process_inventory():
         name_inventory = file.readline()
         stock_inventory = int(file.readline())
         price_inventory = float(file.readline())
-        new_inventory = inventory.Inventory(id_inventory,name_inventory,stock_inventory,price_inventory)
-        inventoryList.append(new_inventory.get_id().rstrip('\n'))
-        inventoryList.append(new_inventory.get_name().rstrip('\n'))
-        inventoryList.append(new_inventory.get_stock())
-        inventoryList.append(new_inventory.get_price())
-        #read newline
+        new_inventory = inventory.Inventory(id_inventory,name_inventory,price_inventory, stock_inventory)
+        inventoryDict.update({new_inventory.get_id().rstrip('\n'): [new_inventory.get_name().rstrip('\n'), new_inventory.get_stock(), new_inventory.get_price()]} )
+        
         id_inventory = file.readline() 
     file.close()
     
+    print(inventoryDict)
+    return inventoryDict
     
-    return inventoryList
     
-    
-def print_inventory(list_inventory):
+def print_inventory(dict_inventory):
     
     
     print(format("ID", "5"), format("Item", '30'), format("Price", '10'), format("Stock", '15'))
     
-    for i in range(0, (len(list_inventory)), 4):
+    for i in dict_inventory:
         
-        print(format(list_inventory[i], '5'), format(list_inventory[i+1], '30'), "$", format(list_inventory[i+3], '5'), format(list_inventory[i+2], '11'))
+        print(format(i, '5'), format(dict_inventory[i][0], '30'), "$", format(dict_inventory[i][1], '5'), format(dict_inventory[i][2], '11'))
     print("Enter 0 when finished")
     
     
-def get_item_id (list_inventory): 
+def get_item_id (dict_inventory): 
     
     value = True
     while value: 
@@ -59,7 +56,7 @@ def get_item_id (list_inventory):
                 value = False
             
             else:
-                if item_id not in list_inventory: 
+                if item_id not in dict_inventory: 
                     print("Input was invalid.")
                     value = True
                 else: 
@@ -71,6 +68,15 @@ def get_item_id (list_inventory):
             print("Input was invalid.")
             value = True
            
+    return item_id
+
+
+def get_quantity (list_inventory): 
+    
+    item_quantity = float(input("Please enter the desired quantity (negative quantity for return): "))
+    return item_quantity
+    #do we do validate the quanity 
+    #when it says new the only new thing is the quantity rigth? 
     
 def write_updated_inventory(): 
     file = open("UpdatedInventory.txt", "w")
@@ -83,8 +89,10 @@ def print_invoice():
     
 def main():   
     
-    list_inventory = process_inventory()
-    print_inventory(list_inventory)
-    get_item_id(list_inventory)
+    dict_inventory = process_inventory()
+    print_inventory(dict_inventory)
+    iduser = get_item_id(dict_inventory)
+    quanityuser = get_quantity(dict_inventory)
+    
     
 main()
