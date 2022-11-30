@@ -54,17 +54,23 @@ def get_item_id (list_inventory):
     while value: 
         try: 
             item_id = input("Please input the item ID you wish to purchase/return: ")
-            item_id = float(item_id)
-            for item_id in list_inventory:
-               value = False
+            
+            if float(item_id) == 0: 
+                value = False
+            
+            else:
+                if item_id not in list_inventory: 
+                    print("Input was invalid.")
+                    value = True
+                else: 
+                    value = False
+            
+            
                 
         except ValueError:
             print("Input was invalid.")
-        else: 
-            value = False 
-            
-        
-
+            value = True
+           
     
 def write_updated_inventory(): 
     file = open("UpdatedInventory.txt", "w")
