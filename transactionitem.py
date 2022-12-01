@@ -7,40 +7,39 @@ Created on Fri Nov 25 15:12:32 2022
 """
 
 class TransactionItem: 
-    def __init__(self, new_id, new_name, new_qty, new_price):
-        self.id = new_id
-        self.__name = new_name
-        self.__quantity = new_qty
-        self.__price = new_price
+    def __init__(self, user_id, name, price, quantity):
+        self.__id = user_id
+        self.__name = name
+        self.__quantity = quantity
+        self.__price = price
     
-    def get_id(self): 
-        return self.id
-        
-        
+   
+    def get_id(self):
+       return self.__id
+       
+    def get_name(self):
+       return self.__name
+       
+    def get_stock(self):
+       return self.__stock
+       
+    def get_price(self):
+       return self.__price
+   
     def set_id(self, new_id): 
         self.__id = new_id
-        
-        
-    def get_name(self): 
-        return self.__name
         
         
     def set_name(self,new_name): 
         self.__name = new_name
         
         
-    def get_qty(self): 
-        return self.__quantity
-        
-        
+   
     def set_qty(self,new_qty): 
-        self.__quantity = new_qty
+       
+        self.__quantity =  new_qty 
         
-        
-    def get_price(self): 
-        return self.__price
-        
-        
+   
     def set_price(self,new_price): 
         self.__price = new_price
         
@@ -51,5 +50,6 @@ class TransactionItem:
         
         
     def __str__(self): 
-        print()
+        var = format(self.__id.rstrip("\n"), '5') +  format(self.__name.rstrip("\n"), '35')+ "$" + format(str(self.__price), '10') + format(str(self.__quantity), '10')
+        return var
         
