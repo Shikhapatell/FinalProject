@@ -21,7 +21,7 @@ class TransactionItem:
        return self.__name
        
     def get_stock(self):
-       return self.__stock
+       return self.__quantity
        
     def get_price(self):
        return self.__price

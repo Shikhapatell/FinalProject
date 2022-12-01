@@ -85,8 +85,20 @@ def get_quantity (list_inventory, item_id):
     
 def write_updated_inventory(dict_inventory): 
     file = open("UpdatedInventory.txt", "w")
+    
+    count = 0
     for i in dict_inventory: 
-        file.write(dict_inventory[i].__str__() + "\n")
+        if count < 4: 
+            file.write(dict_inventory[i].get_id()+"\n")
+            file.write(dict_inventory[i].get_name()+"\n")
+            file.write(str(dict_inventory[i].get_price())+"\n")
+            file.write(str(dict_inventory[i].get_stock())+"\n")
+            count+= 4
+        else: 
+            file.write(dict_inventory[i].get_id())
+            file.write(dict_inventory[i].get_name()+"\n")
+            file.write(str(dict_inventory[i].get_price())+"\n")
+            file.write(str(dict_inventory[i].get_stock())+"\n")
         
     
 def print_invoice(): 
@@ -105,11 +117,10 @@ def main():
         if iduser != 0: 
             new_transaction = transactionitem.TransactionItem(iduser,dict_inventory[iduser].get_name(),dict_inventory[iduser].get_price(), quanityuser)
             original = dict_inventory[iduser].get_stock()
-            updatedQuantity = original - quanityuser
+            updatedQuantity = int(original - quanityuser)
             new_transaction.set_qty(updatedQuantity)
            
             dict_inventory[iduser] = new_transaction 
-
             write_updated_inventory(dict_inventory)
     
     
