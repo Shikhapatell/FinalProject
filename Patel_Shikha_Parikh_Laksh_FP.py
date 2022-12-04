@@ -11,10 +11,10 @@ Created on Fri Nov 25 15:12:42 2022
 import inventory
 import transactionitem
 
-def process_inventory(): 
+def process_inventory(inventory_file): 
     
     
-    file = open("Inventory.txt", "r")
+    file = open(inventory_file, "r")
     id_inventory = file.readline().rstrip('\n')
     inventoryDict = {}
     
@@ -91,40 +91,59 @@ def write_updated_inventory(dict_inventory):
         if count < 4: 
             file.write(dict_inventory[i].get_id()+"\n")
             file.write(dict_inventory[i].get_name()+"\n")
-            file.write(str(dict_inventory[i].get_price())+"\n")
             file.write(str(dict_inventory[i].get_stock())+"\n")
+            file.write(str(dict_inventory[i].get_price())+"\n")
             count+= 4
         else: 
             file.write(dict_inventory[i].get_id())
             file.write(dict_inventory[i].get_name()+"\n")
-            file.write(str(dict_inventory[i].get_price())+"\n")
             file.write(str(dict_inventory[i].get_stock())+"\n")
+            file.write(str(dict_inventory[i].get_price())+"\n")
         
     
-def print_invoice(): 
-    #insert code 
+def print_invoice(transaction_dict): 
     print()
     
     
 def main():   
-    
-    dict_inventory = process_inventory()
+    transaction_dict = {}
+    dict_inventory = process_inventory("Inventory.txt")
     print_inventory(dict_inventory)
     iduser = get_item_id(dict_inventory)
-    quanityuser = get_quantity(dict_inventory, iduser)
+    quantityuser = get_quantity(dict_inventory, iduser)
     
     if iduser in dict_inventory: 
         if iduser != 0: 
-            new_transaction = transactionitem.TransactionItem(iduser,dict_inventory[iduser].get_name(),dict_inventory[iduser].get_price(), quanityuser)
+            new_transaction = transactionitem.TransactionItem(iduser,dict_inventory[iduser].get_name(),dict_inventory[iduser].get_price(), quantityuser)
+            transaction_dict.update({new_transaction.get_id().rstrip("\n|"):new_transaction})
             original = dict_inventory[iduser].get_stock()
-            updatedQuantity = int(original - quanityuser)
+            updatedQuantity = int(original - quantityuser)
             new_transaction.set_qty(updatedQuantity)
-           
             dict_inventory[iduser] = new_transaction 
-            write_updated_inventory(dict_inventory)
+        elif quantityuser > dict_inventory[iduser].get_stock():
+           print("Sorry, we do not have enough stock.")
+           print("")     
+           write_updated_inventory(dict_inventory)
     
-    
-    
-    
+    while True:
+        dict_inventory = process_inventory("UpdatedInventory.txt")
+        print_inventory(dict_inventory)
+        iduser = get_item_id(dict_inventory)
+        if iduser == "0":
+            
+            break
+        quantityuser = get_quantity(dict_inventory, iduser)
+        if quantityuser > dict_inventory[iduser].get_stock():
+            print("Sorry, we do not have enough stock.")
+            print("")
+        elif iduser in dict_inventory: 
+            if iduser != 0: 
+                new_transaction = transactionitem.TransactionItem(iduser,dict_inventory[iduser].get_name(),dict_inventory[iduser].get_price(), quantityuser)
+                original = dict_inventory[iduser].get_stock()
+                updatedQuantity = int(original - quantityuser)
+                new_transaction.set_qty(updatedQuantity)
+                dict_inventory[iduser] = new_transaction 
+                write_updated_inventory(dict_inventory)
+    print(transaction_dict)
     
 main()

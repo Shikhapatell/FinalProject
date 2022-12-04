@@ -44,8 +44,8 @@ class TransactionItem:
         self.__price = new_price
         
         
-    def calc_cost(): 
-        print()
+    def calc_cost(self): 
+        return self.__quantity * self.__price
         
         
         
