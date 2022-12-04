@@ -34,6 +34,7 @@ class TransactionItem:
         self.__name = new_name
         
         
+  
    
     def set_qty(self,new_qty): 
        
@@ -43,9 +44,9 @@ class TransactionItem:
     def set_price(self,new_price): 
         self.__price = new_price
         
-        
-    def calc_cost(self): 
+    def calc_cost(self):
         return self.__quantity * self.__price
+ 
         
         
         
