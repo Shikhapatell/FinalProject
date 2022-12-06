@@ -100,7 +100,7 @@ def print_invoice(transaction_dict, original):
     print(format("ID", "5"), format("Item", '33'),format("Qty", '8'), format("Price", '8'), format("Total", '11'))
     for i in transaction_dict: 
         
-        print(format((i), "6") + format(transaction_dict[i].get_name(), "22")+ format(original, "15")+format(round(transaction_dict[i].get_price(), 2), "11")+format(round(transaction_dict[i].calc_cost(), 1), "8"))
+        print(format((i), "6") + format(transaction_dict[i].get_name(), "22")+ format(original - transaction_dict[i].get_stock(), "15")+format(round(transaction_dict[i].get_price(), 2), "11")+format(round(transaction_dict[i].calc_cost(), 1), "8"))
 
     
 def main():   
@@ -118,9 +118,9 @@ def main():
         elif iduser != 0: 
             new_transaction = transactionitem.TransactionItem(iduser,dict_inventory[iduser].get_name(),dict_inventory[iduser].get_price(), quantityuser)
             transaction_dict.update({new_transaction.get_id().rstrip("\n|"):new_transaction})
-            original = dict_inventory[iduser].get_stock()
-    
-            updatedQuantity = int(original - quantityuser)
+            original = dict_inventory[iduser].get_stock() 
+            updatedQuantity = int(original-quantityuser)
+            print(updatedQuantity)
             new_transaction.set_qty(updatedQuantity)
             dict_inventory[iduser] = new_transaction 
             write_updated_inventory(dict_inventory)
@@ -141,7 +141,8 @@ def main():
                 new_transaction = transactionitem.TransactionItem(iduser,dict_inventory[iduser].get_name(),dict_inventory[iduser].get_price(), quantityuser)
                 transaction_dict.update({new_transaction.get_id().rstrip("\n|"):new_transaction})
                 original = dict_inventory[iduser].get_stock()
-                updatedQuantity = int(original - quantityuser)
+                updatedQuantity = original - transaction_dict[i].get_stock()
+                print(updatedQuantity)
                 new_transaction.set_qty(updatedQuantity)
                 dict_inventory[iduser] = new_transaction 
                 write_updated_inventory(dict_inventory)

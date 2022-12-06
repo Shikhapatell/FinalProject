@@ -48,7 +48,7 @@ class TransactionItem:
         return self.__quantity * self.__price
  
         
-        
+ 
         
     def __str__(self): 
         var = format(self.__id.rstrip("\n"), '5') +  format(self.__name.rstrip("\n"), '35')+ "$" + format(str(self.__price), '10') + format(str(self.__quantity), '10')
