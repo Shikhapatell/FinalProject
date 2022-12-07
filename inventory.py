@@ -6,14 +6,18 @@ Created on Fri Nov 25 15:12:30 2022
 @author: shikhapatel
 """
 
+
+#This class is for the inventory items
 class Inventory: 
+    
+    #object attributes
     def __init__(self, user_id, name, price, stock):
         self.__id = user_id
         self.__name = name
         self.__stock = stock
         self.__price = price
         
-        
+    #accessor methods    
     def get_id(self):
         return self.__id
         
@@ -25,7 +29,8 @@ class Inventory:
         
     def get_price(self):
         return self.__price
-        
+     
+    #restock method
     def restock(self,new_stock):
         if 0 < new_stock: 
             self.__stock += new_stock
@@ -33,14 +38,14 @@ class Inventory:
         else: 
             return False 
             
-        
+    #purchase method    
     def purchase(self,purch_qty):
         if self._stock - purch_qty >= 0: 
             self._stock -= purch_qty
             return True 
         else: 
             return False 
-        
+    #str method   
     def __str__(self): 
         var = format(self.__id.rstrip("\n"), '5') +  format(self.__name.rstrip("\n"), '35')+ "$" + format(str(self.__price), '10') + format(str(self.__stock), '10')
         return var
