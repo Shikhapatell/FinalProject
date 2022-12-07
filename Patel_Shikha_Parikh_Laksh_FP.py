@@ -24,7 +24,7 @@ def process_inventory(inventory_file):
     #loop to go through every line of file and assign them to variables that are associated with it
     while id_inventory!='':  
         name_inventory = file.readline().rstrip('\n')
-        stock_inventory = int(file.readline().rstrip('\n'))
+        stock_inventory = float(file.readline().rstrip('\n'))
         price_inventory = float(file.readline().rstrip('\n'))
         #Create an instance of inventory with the above variables as attributes
         new_inventory = inventory.Inventory(id_inventory,name_inventory,price_inventory, stock_inventory)
@@ -97,9 +97,9 @@ def print_invoice(transaction_dict):
    
     tax = total * .085
     totaloverall = total + tax
-    print("\nPrice: $", round(total, 2))
-    print("Tax: $", round(tax, 2))
-    print("Total: $", round(totaloverall, 2))
+    print("\nPrice: $", format(total,'.2f'), sep="")
+    print("Tax: $", format(tax,'.2f'),sep="")
+    print("Total: $", format(totaloverall,'.2f'), sep="")
     
     
 def main():   
