@@ -124,6 +124,7 @@ def main():
         dict_inventory = process_inventory("UpdatedInventory.txt")
         print_inventory(dict_inventory)
         iduser = get_item_id(dict_inventory)
+        original = dict_inventory[iduser].get_stock() 
         #if user enters 0 then invoice is printed
         if iduser == "0":
             print_invoice(transaction_dict, original)
@@ -132,14 +133,17 @@ def main():
         if quantityuser > dict_inventory[iduser].get_stock():
             print("Sorry, we do not have enough stock.")
             print("")
+  
         
+  
+    
+  
             if iduser != 0: 
                 new_transaction = transactionitem.TransactionItem(iduser,dict_inventory[iduser].get_name(),dict_inventory[iduser].get_price(), quantityuser)
                 transaction_dict.update({new_transaction.get_id().rstrip("\n|"):new_transaction})
                 original = dict_inventory[iduser].get_stock()
                 updatedQuantity = original - transaction_dict[i].get_stock()
                 print(updatedQuantity)
-                new_transaction.set_qty(updatedQuantity)
                 dict_inventory[iduser] = new_transaction 
                 write_updated_inventory(dict_inventory)
    
