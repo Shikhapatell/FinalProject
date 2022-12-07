@@ -85,15 +85,27 @@ def write_updated_inventory(dict_inventory):
        
         
 #This function prints the invoice at the end of the transaction(s)  
-def print_invoice(transaction_dict, original): 
+def print_invoice(transaction_dict): 
     print(format("ID", "5"), format("Item", '33'),format("Qty", '8'), format("Price", '8'), format("Total", '11'))
-    for i in transaction_dict: 
-        print(format((i), "6") + format(transaction_dict[i].get_name(), "22")+ format(original - transaction_dict[i].get_stock(), "15")+format(round(transaction_dict[i].get_price(), 2), "11")+format(round(transaction_dict[i].calc_cost(), 1), "8"))
 
+    total = 0
+    for i in transaction_dict: 
+        
+        print(format((i), "6") + format(transaction_dict[i].get_name(), "22")+ format(transaction_dict[i].get_stock(), "15")+format(round(transaction_dict[i].get_price(), 2), "11")+format(round(transaction_dict[i].calc_cost(), 2), "8"))
+        total += transaction_dict[i].calc_cost()
+   
+   
+    tax = total * .085
+    totaloverall = total + tax
+    print("\nPrice: $", round(total, 2))
+    print("Tax: $", round(tax, 2))
+    print("Total: $", round(totaloverall, 2))
+    
     
 def main():   
     #initialized new dictionary to store transaction objects
     transaction_dict = {}
+    invoice = {}
     #process inventory text file and convert into dictionary of objects
     dict_inventory = process_inventory("Inventory.txt")
     #print dictionary into a table
@@ -107,45 +119,74 @@ def main():
         #conditional to check if current inventory can support the transaction
         if quantityuser > dict_inventory[iduser].get_stock():
            print("Sorry, we do not have enough stock.")
-           print("")     
+           print("")    
+           
+        
+        
         #performs transaction  
-        elif iduser != 0: 
-            #creates transactionitem and adds to transaction item dictionary
+        if quantityuser <= dict_inventory[iduser].get_stock() and iduser != "0": 
+               #creates transactionitem and adds to transaction item dictionary
+                
             new_transaction = transactionitem.TransactionItem(iduser,dict_inventory[iduser].get_name(),dict_inventory[iduser].get_price(), quantityuser)
+            invoice.update({new_transaction.get_id().rstrip("\n|"):new_transaction})
             transaction_dict.update({new_transaction.get_id().rstrip("\n|"):new_transaction})
             original = dict_inventory[iduser].get_stock() 
-            updatedQuantity = int(original-quantityuser)
+            
+            updatedQuantity = int(original - quantityuser)
+           
+        
+       
+        
             new_transaction.set_qty(updatedQuantity)
             dict_inventory[iduser] = new_transaction
             #updates new inventory
             write_updated_inventory(dict_inventory)
+            updatedQuantityinvoice = int(quantityuser)
+            
+            new_transaction.set_qty(updatedQuantityinvoice)
+            dict_inventory = process_inventory("UpdatedInventory.txt")
+            
     #loop if there are more transactions
     while True:
-        dict_inventory = process_inventory("UpdatedInventory.txt")
+    
+       
+       
+        
         print_inventory(dict_inventory)
         iduser = get_item_id(dict_inventory)
-        original = dict_inventory[iduser].get_stock() 
+        
         #if user enters 0 then invoice is printed
         if iduser == "0":
-            print_invoice(transaction_dict, original)
+            print_invoice(transaction_dict)
             break
+        
         quantityuser = get_quantity(dict_inventory, iduser)
         if quantityuser > dict_inventory[iduser].get_stock():
-            print("Sorry, we do not have enough stock.")
-            print("")
-  
+           print("Sorry, we do not have enough stock.")
+           print("")    
+           
+        #performs transaction  
+        if quantityuser <= dict_inventory[iduser].get_stock() and iduser != "0": 
+               #creates transactionitem and adds to transaction item dictionary
+                
+            new_transaction = transactionitem.TransactionItem(iduser,dict_inventory[iduser].get_name(),dict_inventory[iduser].get_price(), quantityuser)
+            invoice.update({new_transaction.get_id().rstrip("\n|"):new_transaction})
+            transaction_dict.update({new_transaction.get_id().rstrip("\n|"):new_transaction})
+            original = dict_inventory[iduser].get_stock() 
+            
+            updatedQuantity = int(original - quantityuser)
+           
         
-  
-    
-  
-            if iduser != 0: 
-                new_transaction = transactionitem.TransactionItem(iduser,dict_inventory[iduser].get_name(),dict_inventory[iduser].get_price(), quantityuser)
-                transaction_dict.update({new_transaction.get_id().rstrip("\n|"):new_transaction})
-                original = dict_inventory[iduser].get_stock()
-                updatedQuantity = original - transaction_dict[i].get_stock()
-                print(updatedQuantity)
-                dict_inventory[iduser] = new_transaction 
-                write_updated_inventory(dict_inventory)
-   
+       
+        
+            new_transaction.set_qty(updatedQuantity)
+            dict_inventory[iduser] = new_transaction
+            #updates new inventory
+            write_updated_inventory(dict_inventory)
+            updatedQuantityinvoice = int(quantityuser)
+            
+            new_transaction.set_qty(updatedQuantityinvoice)
+            dict_inventory = process_inventory("UpdatedInventory.txt")
+            
     
 main()
