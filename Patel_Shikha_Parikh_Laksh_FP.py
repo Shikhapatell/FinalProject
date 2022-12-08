@@ -117,6 +117,9 @@ def main():
     #conditional to check if the ID of the corresponding item is in the inventory
     if iduser in dict_inventory: 
         #conditional to check if current inventory can support the transaction
+        
+        
+            
         if quantityuser > dict_inventory[iduser].get_stock():
            print("Sorry, we do not have enough stock.")
            print("")    
@@ -149,7 +152,10 @@ def main():
     #loop if there are more transactions
     while True:
     
-       
+        if iduser == "0":
+          print("Thank you for visiting.")
+          break
+      
        
         
         print_inventory(dict_inventory)
@@ -158,6 +164,7 @@ def main():
         #if user enters 0 then invoice is printed
         if iduser == "0":
             print_invoice(transaction_dict)
+            
             break
         
         quantityuser = get_quantity(dict_inventory, iduser)
@@ -178,7 +185,7 @@ def main():
            
         
        
-        
+           
             new_transaction.set_qty(updatedQuantity)
             dict_inventory[iduser] = new_transaction
             #updates new inventory
